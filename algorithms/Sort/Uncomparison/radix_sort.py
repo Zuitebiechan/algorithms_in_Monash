@@ -51,19 +51,18 @@ def counting_sort_for_radix(arr, exp, base):
 
     count_array = [[] for _ in range(base)]
 
-    # first, go thru the array to get the digits and append them to the count_array -> O(N)
-    for i in range(n):
-        digit = arr[i] // exp % base
-        count_array[digit].append(arr[i])
+    # First, go through the array to get the digits and append them to the count_array -> O(N)
+    for num in arr:
+        digit = (num // exp) % base
+        count_array[digit].append(num)
 
     # second, go thru the count_array left to right to add all numbers to output based on the sequence after sorting the column -> O(N + 10) = O(N)
     index = 0
-    for i in range(len(count_array)): 
-        frequency = len(count_array[i])
-        for j in range(frequency):
-            output[index] = count_array[i][j]
+    for bucket in count_array:
+        for num in bucket:
+            output[index] = num
             index += 1
-    
+
     return output
 
 

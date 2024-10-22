@@ -31,10 +31,12 @@ def insertion_sort(mylist: list) -> None:
     The insertion sort algorithm is stable <- if the same values, no shifting will happen.
     """
     for i in range(1, len(mylist)):
-        key = mylist[i] # store the value to compare
-        j = i - 1 # get the index before this value
+        key = mylist[i]  # store the value to compare
+        j = i - 1  # get the index before this value
         # if the key value is smaller than the value before it, shift mylist[j] and mylist[j+1] and go j-1
         while j >= 0 and key < mylist[j]:
-            mylist[j+1] = mylist[j] # cover the value using the value before it
+            # cover the value using the value before it
+            mylist[j+1] = mylist[j]
             j -= 1
-        mylist[j+1] = key # finally put the key value at the most front place, now mylist[j+1] is the smallest value in mylist[0...i]
+        # finally put the key value at the most front place, now mylist[j+1] is the smallest value in mylist[0...i]
+        mylist[j+1] = key
