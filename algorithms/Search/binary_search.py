@@ -1,6 +1,6 @@
 def binary_search(arr, target):
     """
-    Perform a binary search to find the index of 'target' in a sorted array 'arr'.
+    Perform a binary search to find the index of 'target' in a sorted array 'arr'. The array 'arr' must be sorted in ascending order.
     
     Parameters:
     arr (list): A sorted list of elements.
@@ -8,6 +8,20 @@ def binary_search(arr, target):
 
     Returns:
     int: The index of 'target' in 'arr' if found, otherwise -1 if 'target' is not present.
+
+    Invariant:
+    If target in arr, then at each iteration:
+        1. arr[left] ≤ target,
+        2. if right != len(arr), then arr[right] > target.
+
+    Time complexity:
+    O(log n), where n is the number of elements in the array 'arr'.
+    Analysis:
+    - At each iteration, the search space is halved.
+    - The search space is reduced to half at each iteration.
+
+    Space complexity:
+    O(1).
     """
     # Initialize two pointers representing the start and end of the search space
     left = 0
