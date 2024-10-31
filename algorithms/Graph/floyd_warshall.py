@@ -25,6 +25,11 @@ class Graph:
         self.dist_matrix[u_id][v_id] = (weight, None)
 
     def floyd_warshall(self):
+        """
+        Time complexity:
+            O(V^3) where V is the no. of vertices in the graph
+        
+        """
         for k in range(self.num_vertices):
             for i in range(self.num_vertices):
                 for j in range(self.num_vertices):

@@ -1,8 +1,8 @@
 from typing import Callable, TypeVar, Generic
 from data_structure.Stack.stack import Stack
 
-K = TypeVar('T')
-I = TypeVar('T')
+K = TypeVar('K')
+I = TypeVar('I')
 
 
 class BinarySearchTreeNode(Generic[K, I]):

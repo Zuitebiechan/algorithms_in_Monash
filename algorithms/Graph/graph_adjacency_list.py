@@ -8,7 +8,7 @@ class Graph:
         for i in range(N):
             self.vertices[i] = Vertex(i) 
 
-    def add_edge(self, u_id: int, v_id: int, w: int) -> None:
+    def add_edge(self, u_id: int, v_id: int, w=1) -> None:
         u = self.vertices[u_id]
         v = self.vertices[v_id]
         
@@ -81,25 +81,92 @@ class Graph:
 
         return traversal_result
 
-    def kahn_topological_sort(self):
-        self.reset()
-        start_vertices = deque([v for v in self.vertices if v.in_degree == 0])
-        topo_order = []
+    def kahn_topological_sort_bfs(self):
+        """
+        Kahn's
+        To sort topologically using bfs
 
-        while start_vertices:
-            current_vertex = start_vertices.popleft()
-            topo_order.append(current_vertex.id)
+        Time complexity:
+            - O(V+E)
 
-            for edge in current_vertex.edges:
-                neighbor = edge.to_vertex
+        Aux space complexity:
+            - O(V)
+        """
+
+        self.reset()    # TC: O(V)
+
+        # to store the vertices we're going to process, those vertices have no imcoming edges
+        start_vertices_stack = []   # SC: O(V)
+
+        # to store the final sort result
+        topo_order = []   # SC: O(V)
+
+        # go thru all edges (u,v), find out the number of incoming edges of Vertex v
+        for vertex in self.vertices:   # TC: O(V+E)
+            for edge in vertex.edges:
+                edge.v.in_degree += 1
+        
+        # 将所有入度为0的顶点加入栈
+        for vertex in self.vertices:    # TC: O(V)
+            if vertex.in_degree == 0:
+                start_vertices_stack.append(vertex)
+
+        # if we still go unprocessed vertex
+        while start_vertices_stack:    # TC: O(V+E)
+            # pop out a unprocessed vertex
+            current_vertex = start_vertices_stack.pop()
+
+            # since the vertex in stack has no incoming edges, safely add it to the sort list
+            topo_order.append(current_vertex)
+
+            # go thru all edges of this vertex
+            for edge in current_vertex.edges:    # TC: O(E)
+                # find out the neighbor node of each edge
+                neighbor = edge.v
+
+                # delete its incomimg edge
                 neighbor.in_degree -= 1
+
+                # if the neighbor node has no incoming edges after deleting, add it the process list
                 if neighbor.in_degree == 0:
-                    start_vertices.append(neighbor)
+                    start_vertices_stack.append(neighbor)
 
         if len(topo_order) == len(self.vertices):
             return topo_order
         else:
-            return None  # 图中存在环，无法进行拓扑排序
+            raise ValueError("There'a cycle in the graph. Cannot do topological sort.")
+        
+    def dfs_topological_sort(self):
+        """
+        Topological sort using DFS (经典的 DFS 拓扑排序)
+        """
+        # 用于存储拓扑排序的结果
+        stack = []
+
+        self.reset()
+
+        # 对每个未访问的节点执行 DFS
+        for vertex in self.vertices:
+            if not vertex.visited:
+                self.aux_dfs_topological_sort(vertex, stack)
+
+        # 返回反转后的拓扑排序
+        return stack[::-1]
+
+    def aux_dfs_topological_sort(self, vertex: Vertex, stack: list):
+        """
+        辅助 DFS 函数，用于递归访问节点
+        """
+        # 标记当前节点为已访问
+        vertex.visited = True
+
+        # 递归访问所有邻居节点
+        for edge in vertex.edges:
+            if not edge.v.visited:
+                self.aux_dfs_topological_sort(edge.v, stack)
+
+        # 当前节点的所有邻居节点已访问，加入栈
+        stack.append(vertex)
 
     def dijkstra(self, start_id):
         """
@@ -156,6 +223,7 @@ class Graph:
             vertex.distance = float('inf')
             vertex.previous = None
             vertex.visited = False
+            vertex.in_degree = 0
 
     def display_distances(self):
         for vertex in self.vertices:

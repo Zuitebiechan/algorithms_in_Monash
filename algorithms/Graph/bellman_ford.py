@@ -5,7 +5,7 @@ from typing import List
 
 def BellmanFord(vertices: List[Vertex], edges: List[Edge], source: Vertex):
     """
-    Bellman-Ford algorithm for finding the shortest path from a source vertex to all other vertices in a graph.
+    Bellman-Ford algorithm for finding the shortest path from a source vertex to all other vertices in a graph with negative edge.
     :param vertices: List of vertices in the graph
     :param edges: List of edges in the graph
     :param source: Source vertex
