@@ -11,16 +11,13 @@ def counting_sort(a_list) -> list:
         - if stable: O(M+N) <- count_array
         - if not: O(M)
     """
-    # first, find out the maximum item -> O(N), where N is the length of the input list
-    max_item = a_list[0]
-    for item in a_list:
-        if item > max_item:
-            max_item = item
+    # first, find out the maximum item -> O(N * comp), where N is the length of the input list
+    max_item = max(a_list)
     
     # second, initialize count_array -> O(M) where M is the maximum item in the input list, also the length of count_array
-    count_array = [None] * (max_item+1)
+    count_array = [None] * (max_item+1) # +1 cuz index starts from 1
     for i in range(len(count_array)):
-        count_array[i] = []
+        count_array[i] = [] # [ [],[],[] ... [] ]
 
     # third, go thru the input list to update the count_array -> O(N)
     for item in a_list:
@@ -40,8 +37,8 @@ def counting_sort(a_list) -> list:
 
 
 ### testing
-# a_list = [6, 3, 1, 7, 2, 8, 1, 7]
-# print(counting_sort(a_list)) # Expected output: [1, 1, 2, 3, 6, 7, 7, 8]
+a_list = [6, 3, 1, 7, 2, 8, 1, 7]
+print(counting_sort(a_list)) # Expected output: [1, 1, 2, 3, 6, 7, 7, 8]
 
 
 

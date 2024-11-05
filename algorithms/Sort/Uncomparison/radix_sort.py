@@ -21,10 +21,7 @@ def radix_sort(a_list, base=10) -> list:
         if d becomes very large, we can increase base to 100, 1000.... (tradeoff between space and time complexity)
     """
     # first, find the max number in the list -> O(N)
-    max_item = a_list[0]
-    for item in a_list:
-        if item > max_item:
-            max_item = item 
+    max_item = max(a_list)
 
     # second, find the number of times calling counting sort under specific base
     num_passes = math.ceil(math.log(max_item+1, base))

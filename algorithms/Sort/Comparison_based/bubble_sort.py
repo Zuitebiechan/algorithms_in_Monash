@@ -20,7 +20,7 @@ def bubble_sort(mylist: list) -> None:
 
     Correctness:
         Loop invariant:
-            - mylist[n-i...n-1] is sorted.
+            - mylist[n-1-i...n-1] is sorted.
         Termination:
             i will always increment until the end of the list and j will increment until len(mylist)-i-1.
 
@@ -29,13 +29,20 @@ def bubble_sort(mylist: list) -> None:
     """
     for i in range(len(mylist)):
         flag = False # check if there is any swap in this iteration
+
         for j in range(0, len(mylist)-i-1):
             if mylist[j] > mylist[j+1]: # if the current item is larger than the next item, then swap
                 # in the end, the largest item will be at the end of mylist
                 mylist[j], mylist[j+1] = mylist[j+1], mylist[j]
                 flag = True
+                
         
         if flag is False:
             break
-    
+
+
+if __name__ == "__main__":
+    arr = [5, 5, 4, 3, 1, 2, 6]
+    bubble_sort(arr)
+    print(arr)
     

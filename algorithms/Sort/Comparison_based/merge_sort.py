@@ -31,7 +31,8 @@ def merge(l1: list[T], l2: list[T], key=lambda x:x) -> list[T]:
 def mergesort(l: list[T], key=lambda x:x) -> list[T]:
     """
     Sort a list using the mergesort operation.
-    :complexity: Best/Worst Case O(NlogN * comp(T))
+    :Time complexity: Best/Worst Case O(NlogN * comp(T))
+    :Aux Space Complexity: O(N + logN) -> O(N) where N is the length of list. O(N) is the new list to store the result and O(logN) is the recurrence depth.
     """
     if len(l) <= 1:
         return l
@@ -39,3 +40,8 @@ def mergesort(l: list[T], key=lambda x:x) -> list[T]:
     l1 = mergesort(l[:break_index], key=key)
     l2 = mergesort(l[break_index:], key=key)
     return merge(l1, l2, key=key)
+
+if __name__ == "__main__":
+    arr = [5, 5, 4, 3, 1, 2, 6]
+    print(mergesort(arr))
+    

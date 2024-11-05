@@ -11,10 +11,13 @@ def binary_search(l: list[T], item: T) -> int:
     :return: The index at which either:
         * This item is located, or
         * Where this item would be inserted to preserve the ordering.
-        
-    :complexity:
+
+    :Time Complexity:
     Best Case Complexity: O(1), when middle index contains item.
     Worst Case Complexity: O(log(N)), where N is the length of l.
+
+    :Aux Space Complexity:
+        - O(logN) due to logN recurrence depth
     """
     return _binary_search_aux(l, item, 0, len(l))
 

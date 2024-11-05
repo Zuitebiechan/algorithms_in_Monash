@@ -39,5 +39,11 @@ def selection_sort(mylist: list) -> None:
                 min_index = j
 
         # Swap the minimum element with the first element of the unsorted part
-        mylist[min_index], mylist[j] = mylist[j], mylist[min_index]
+        mylist[min_index], mylist[i] = mylist[i], mylist[min_index]
+
+
+if __name__ == "__main__":
+    arr = [5, 5, 4, 3, 1, 2, 6]
+    selection_sort(arr)
+    print(arr)
     

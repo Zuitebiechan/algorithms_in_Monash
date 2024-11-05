@@ -174,6 +174,13 @@ class Graph:
         only works for non-negative weights graph
 
         if the graph has negative weights, use bellman-ford algorithm
+
+        Time Complexity:
+            - O((V+E) logV) with MinHeap.
+        Analysis:
+            - Every vertex is possible to be pop out once -> O(V logV)
+            - Every edge is possible to be updated -> O(E logV)
+            - E is usually greater than V -> O((V+E) logV) -> O(E logV)
         """
         self.reset()
 

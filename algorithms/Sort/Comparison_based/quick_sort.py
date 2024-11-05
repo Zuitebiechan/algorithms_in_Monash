@@ -1,6 +1,6 @@
 
 ### original one
-def quick_sort(arr):
+def quick_sort_out_of_place(arr):
     """
     Description:
         Choosing a pivot and partition the list into two parts, then repeat (recursion) on the two parts.
@@ -51,7 +51,7 @@ def quick_sort(arr):
     left = [x for x in arr if x < pivot]       # left is an array containing all elements that are smaller than the pivot
     middle = [x for x in arr if x == pivot]    # middle is an array containing all elements that are equal to the pivot
     right = [x for x in arr if x > pivot]      # right is also an array containing all elements that are greater than the pivot
-    return quick_sort(left) + middle + quick_sort(right)
+    return quick_sort_out_of_place(left) + middle + quick_sort_out_of_place(right)
 
 ### Inplace
 ## Hoare's
@@ -64,33 +64,30 @@ partition scheme. '''
       the right side. It returns the index of the last element
       on the smaller side '''
 
-def partition_Hoares(arr, low, high):
+def partition_hoare(arr, low, high):
     """
     unstable
-
     """
-    pivot = arr[low]
+    pivot = arr[low]  # Choose the first element as the pivot
     i = low - 1
     j = high + 1
 
-    while (True):
-
-        # Find leftmost element greater than
-        # or equal to pivot
+    while True:
+        # Move i to the right until an element >= pivot is found
         i += 1
-        while (arr[i] < pivot):
+        while arr[i] < pivot:
             i += 1
 
-        # Find rightmost element smaller than
-        # or equal to pivot
+        # Move j to the left until an element <= pivot is found
         j -= 1
-        while (arr[j] > pivot):
+        while arr[j] > pivot:
             j -= 1
 
-        # If two pointers met.
-        if (i >= j):
+        # If pointers have crossed, return j
+        if i >= j:
             return j
 
+        # Swap arr[i] and arr[j]
         arr[i], arr[j] = arr[j], arr[i]
 
 
@@ -104,7 +101,7 @@ def quickSort_Hoares(arr, low, high):
     at right place '''
     if (low < high):
 
-        pi = partition_Hoares(arr, low, high)
+        pi = partition_hoare(arr, low, high)
 
         # Separately sort elements before
         # partition and after partition
@@ -122,6 +119,13 @@ partition scheme. '''
       the right side. It returns the index of the last element
       on the smaller side '''
 def lomuto_partition(arr, low, high):
+    """
+    Invariant:
+        - each time after the loop, i+1 is the index of the first item in the arr that is greater than the pivot
+        - each time after the loop, arr[0 ... i] <= pivot
+    Backwards:
+        - when arr is large, many swap operations would occur
+    """
     pivot = arr[high]  # 选择最后一个元素作为基准
     i = low - 1  # 指针i初始化为low - 1
 
@@ -133,14 +137,24 @@ def lomuto_partition(arr, low, high):
     arr[i + 1], arr[high] = arr[high], arr[i + 1]  # 将基准放置在正确位置
     return i + 1
 
-def quick_sort_lomuto(arr, low, high):
+def quick_sort(arr, low, high):
     if low < high:
         pi = lomuto_partition(arr, low, high)
-        quick_sort_lomuto(arr, low, pi - 1)  # 递归排序左子数组
-        quick_sort_lomuto(arr, pi + 1, high)  # 递归排序右子数组
+        quick_sort(arr, low, pi - 1)  # 递归排序左子数组
+        quick_sort(arr, pi + 1, high)  # 递归排序右子数组
 
 ## Dutch National Flag
 def dutch_national_flag_partition(arr, low, high):
+    """
+    三指针分区方法， 每次把list分为 < pivot, = pivot, > pivot 三个部分
+
+    Invariant:
+        after each loop:
+        - arr[0 ... boundary1] < pivot
+        - arr[boundary1 ... i] = pivot
+        - arr[i ... boundary2] unprocessed yet
+        - arr[boundary2 ... n] > pivot
+    """
     pivot = arr[low]
     boundary1 = low
     boundary2 = high
@@ -161,11 +175,7 @@ def dutch_national_flag_partition(arr, low, high):
 
 def quick_sort_dutch_national_flag(arr, low, high):
     """
-    Invariants:
-        - arr[1 ... oundary1 - 1] is blue 
-        - arr[boundary1 ... i] is white
-        - arr[i ... boundary2] is unprocessed yet
-        - arr[boundary2 + 1 ... N] is red
+    QuickSort using DNF partition.
     """
     if low < high:
         boundary1, boundary2 = dutch_national_flag_partition(arr, low, high)
@@ -180,11 +190,11 @@ def printArray(arr, n):
         print(arr[i], end=" ")
     print()
 
-# Driver code
-# arr = [10, 7, 8, 9, 1, 5, 1, 8, 10]
-# n = len(arr)
-# quick_sort_dutch_national_flag(arr, 0, n - 1)
-# print("Sorted array:")
-# printArray(arr, n)
+# test
+arr = [7, 3, 8, 4, 7]
+n = len(arr)
+quickSort_Hoares(arr, 0, n - 1)
+print("Sorted array:")
+printArray(arr, n)
 
 

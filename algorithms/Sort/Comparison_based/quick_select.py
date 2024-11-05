@@ -14,6 +14,9 @@ def partition_mom(arr, pivot):
 def quick_select(arr, k):
     """
     使用 Median of Medians 算法来选择数组中第 k 小的元素。
+
+    Time Complexity:
+        - O(n)
     """
     # Basecase: if the length of arr is less than 5, no need to use MoM, just use any sort algorithm (except counting sort) to sort it and get the k-th element 
     if len(arr) <= 5:
@@ -69,7 +72,7 @@ def partition(arr, l, r) -> int:
     # initialize pointer i to 0, it will always points to the first item in the array that is greater than the pivot; after the loop, it will be the index of the pivot
     i = l
 
-    # go thru the array from 0 to N-2
+    # go thru the array from l to r
     for j in range(l, r):
         if arr[j] <= pivot:
             # put items less than the pivot to front

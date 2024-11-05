@@ -26,6 +26,10 @@ class Graph:
 
     def floyd_warshall(self):
         """
+        Description:
+            Find the shorest distance for each pair (no need source).
+            Also able to check if there's a negative cycle in the graph (if there's a negative cycle, self.dist_matrix[i][i] will be negative).
+    
         Time complexity:
             O(V^3) where V is the no. of vertices in the graph
         
